@@ -867,3 +867,17 @@ int freenect_set_video_buffer(freenect_device *dev, void *buf)
 {
 	return stream_setbuf(dev->parent, &dev->video, buf);
 }
+
+int freenect_toggle_autoexposure(freenect_device *dev)
+{		
+	freenect_context *ctx = dev->parent;	
+
+	if( dev->video.running ) {
+		write_register(dev, 0x47, 0x01);
+	}
+
+	FN_ERROR("\nHello, douchebag!\n");
+	return -1;
+}
+
+

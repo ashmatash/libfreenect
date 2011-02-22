@@ -425,6 +425,16 @@ FREENECTAPI int freenect_set_led(freenect_device *dev, freenect_led_options opti
  */
 FREENECTAPI void freenect_get_mks_accel(freenect_raw_tilt_state *state, double* x, double* y, double* z);
 
+/**
+ * NOT YET IMPLEMENTED.
+ * Toggle the autoexposure function of the RGB camera.
+ *
+ * @param dev Device to toggle autoexposure feature on/off.
+ *
+ * @return 1 on autoexpose enabled, 0 if disabled, and < 0 on error
+ */
+FREENECTAPI int freenect_toggle_autoexposure(freenect_device *dev);
+
 #ifdef __cplusplus
 }
 #endif
