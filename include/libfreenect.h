@@ -433,8 +433,8 @@ FREENECTAPI void freenect_get_mks_accel(freenect_raw_tilt_state *state, double* 
  *
  * @return 1 on autoexpose enabled, 0 if disabled, and < 0 on error
  */
-FREENECTAPI int freenect_toggle_autoexposure(freenect_device *dev);
-
+FREENECTAPI int freenect_hflip_off(freenect_device *dev);
+FREENECTAPI int freenect_hflip_on(freenect_device *dev);
 #ifdef __cplusplus
 }
 #endif

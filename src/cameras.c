@@ -868,7 +868,7 @@ int freenect_set_video_buffer(freenect_device *dev, void *buf)
 	return stream_setbuf(dev->parent, &dev->video, buf);
 }
 
-int freenect_toggle_autoexposure(freenect_device *dev)
+int freenect_hflip_off(freenect_device *dev)
 {		
 	freenect_context *ctx = dev->parent;	
 
@@ -876,7 +876,19 @@ int freenect_toggle_autoexposure(freenect_device *dev)
 		write_register(dev, 0x47, 0x01);
 	}
 
-	FN_ERROR("\nHello, douchebag!\n");
+	FN_ERROR("\nHello, douchebag! Your camera is off...dummbass...\n");
+	return -1;
+}
+
+int freenect_hflip_on(freenect_device *dev)
+{		
+	freenect_context *ctx = dev->parent;	
+
+	if( dev->video.running ) {
+		write_register(dev, 0x47, 0x00);
+	}
+
+	FN_ERROR("\nHello, douchebag! Your camera is off...dummbass...\n");
 	return -1;
 }
 

@@ -206,7 +206,10 @@ void keyPressed(unsigned char key, int x, int y)
 		freenect_set_led(f_dev,LED_OFF);
 	}
 	if (key == 'i') {
-		freenect_toggle_autoexposure(f_dev);
+		freenect_hflip_off(f_dev);
+	}
+	if (key == 'k') {
+	        freenect_hflip_on(f_dev);
 	}
 	freenect_set_tilt_degs(f_dev,freenect_angle);
 }
