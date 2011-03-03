@@ -640,6 +640,23 @@ static int write_register(freenect_device *dev, uint16_t reg, uint16_t data)
 	return 0;
 }
 
+static int read_register(freenect_device *dev, uint16_t reg)
+{
+	freenect_context *ctx = dev->parent;
+	uint16_t reply[2];
+	uint16_t cmd[2];
+	int res;
+
+	cmd[0] = fn_le16(reg);
+	cmd[1] = 0x0;
+
+	res = send_cmd(dev, 0x02, cmd, 4, reply, 4);
+
+	FN_DEBUG("Read Reg 0x%04x -> 0x%02x\n", reg, reply[1]);
+	return res;
+
+}
+
 int freenect_start_depth(freenect_device *dev)
 {
 	freenect_context *ctx = dev->parent;
@@ -872,23 +889,32 @@ int freenect_hflip_off(freenect_device *dev)
 {		
 	freenect_context *ctx = dev->parent;	
 
-	if( dev->video.running ) {
-		write_register(dev, 0x47, 0x01);
-	}
+	read_register(dev, 0x47);
 
-	FN_ERROR("\nHello, douchebag! Your camera is off...dummbass...\n");
+	if( dev->video.running ) {
+		write_register(dev, 0x47, 0x00);
+		return 0;
+	}
+	else {
+		FN_ERROR("\nCamera video not running...\n");
+	}
 	return -1;
+
 }
 
 int freenect_hflip_on(freenect_device *dev)
 {		
-	freenect_context *ctx = dev->parent;	
+	freenect_context *ctx = dev->parent;
+
+	read_register(dev, 0x47);
 
 	if( dev->video.running ) {
-		write_register(dev, 0x47, 0x00);
+		write_register(dev, 0x47, 0x01);
+		return 1;
 	}
-
-	FN_ERROR("\nHello, douchebag! Your camera is off...dummbass...\n");
+	else {
+		FN_ERROR("\nCamera video not running...\n");
+	}	
 	return -1;
 }
 
